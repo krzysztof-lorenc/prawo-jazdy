@@ -6,12 +6,13 @@ Skrypt do importowania bazy pytań egzaminacyjnych na prawo jazdy publikowanych 
 
 Źródłem danych są pliki ze strony Ministerstwa Infrastruktury: https://www.gov.pl/web/infrastruktura/prawo-jazdy
 
-- [Baza pytań na prawo jazdy](https://www.gov.pl/documents/905843/1047987/pytania_plik_pa%C5%BAdziernik_2018.xlsx)
-- [Multimedia cz. 1](https://www.gov.pl/documents/905843/1047987/cz%C4%99%C5%9B%C4%87_1.zip)
-- [Multimedia cz. 2](https://www.gov.pl/documents/905843/1047987/cz%C4%99%C5%9B%C4%87_2.zip)
-- [Multimedia cz. 3](https://www.gov.pl/documents/905843/1047987/cze%C5%9B%C4%87_3.zip)
-- [Multimedia cz. 4](https://www.gov.pl/documents/905843/1047987/cz%C4%99%C5%9B%C4%87_4.zip)
-- [Multimedia cz. 5](https://www.gov.pl/documents/905843/1047987/cz%C4%99%C5%9B%C4%87_5.zip)
+Opuplikowanie pliki na dzień 30.10.2022r.:
+- [Baza pytań na prawo jazdy](https://www.gov.pl/attachment/ec8a835e-0c45-49d5-855d-77e0561e8381)
+- [Multimedia cz. 1](https://www.gov.pl/pliki/rozne/KLIPY-PYTANIA%202021_01%20cz.%201.zip)
+- [Multimedia cz. 2](https://www.gov.pl/pliki/rozne/KLIPY-PYTANIA%202021_01%20cz.%202.zip)
+- [Multimedia cz. 3](https://www.gov.pl/pliki/rozne/KLIPY-PYTANIA%202021_01%20cz.%203.zip)
+- [Multimedia cz. 4](https://www.gov.pl/pliki/rozne/media_prawojazdy_grudzie%C5%84%202021.zip)
+- [Multimedia cz. 5](http://www.gov.pl/attachment/6ea58303-b6d3-4f77-a136-ca295d8f2848)
 
 ## Release
 
@@ -27,13 +28,13 @@ z października 2018 roku jest dostępny na stronie z releasami:
 - Zainstalować pythona 3 oraz dwie biblioteki: argparse i pyexcel_xlsx
 - Ściągnąć plik `prawko2anki.py`
 
-Skrypt uruchamiamy tak: `python prawko2anki.py -i pytania_plik_październik_2018.xlsx -m media -o out -c A`
+Skrypt uruchamiamy tak: `python prawko2anki.py -i pytania_plik_październik_2018.xlsx -m media -o out -c A -s windows`
 
 Pomoc wyświetlana przez skrypt:
 
 ```
 > python prawko2anki.py -h
-usage: prawko2anki.py [-h] -i INPUT -m MEDIA -o OUTPUT -c CATEGORY
+usage: prawko2anki.py [-h] -i INPUT -m MEDIA -o OUTPUT -c CATEGORY [-s {windows,linux}]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -45,37 +46,44 @@ optional arguments:
                         Output directory
   -c CATEGORY, --category CATEGORY
                         License category
+  -s {windows,linux}, --system {windows,linux}
+                        Operating system
 ```
 
-W katalogu wyjściowym powstanie plik `prawo-jazdy-pytania.txt`
-oraz podkatalog `media` z filmikami i obrazkami do pytań.
+Folder `media` z multimediami powinien znajdować się w tym samym katalogu co plix XLSX z input.
+
+W katalogu wyjściowym powstanie plik `prawo-jazdy-kat{CATEGORY}-pytania.txt`
+oraz podkatalog `media` z multimediami do pytań.
 
 ## Import do Anki
 
 [Anki ](https://apps.ankiweb.net/) należy przygotować.
+Filmy i zdjęcia z podkatalogu `media` wklejamy do ścieżki `%APPDATA%\Anki2\{twój_profil}\collection.media`
 
 W menu `Tools, Note types` tworzymy kopię typu `Basic`
 i edytujemy pola (`Tools, Note types, Fields...`) do takiej postaci:
 
-![fields](https://github.com/dpurge/prawo-jazdy/raw/master/img/anki-fields.png "Screenshot z listą pól w nowym typie notki")
+![fields](https://github.com/dpurge/prawo-jazdy/raw/master/img/pola-anki.png "Screenshot z listą pól w nowym typie notki")
 
 Następnie w menu `Tools, Note types, Cards...` dla nowo utworzonego
-typu formatujemy karty przez wklejenie w odpowiednie pola 
+typu formatujemy karty przez wklejenie w odpowiednie pola
 zawartości plików `anki-styling.txt`, `anki-front-template.txt`
 i `anki-back-template.txt`.
 
-![cards](https://github.com/dpurge/prawo-jazdy/raw/master/img/anki-cards.png "Screenshot z edytorem stylów")
+Importujemy pytania w sekcji `Decks` - `Import file`.
+
+![cards](https://github.com/dpurge/prawo-jazdy/raw/master/img/szablon-anki.png "Screenshot z edytorem stylów")
 
 Pytania wyglądają mniej więcej tak:
 
-![question](https://github.com/dpurge/prawo-jazdy/raw/master/img/anki-question.png "Screenshot z pytaniem")
+![question](https://github.com/dpurge/prawo-jazdy/raw/master/img/pytanie-anki.png "Screenshot z pytaniem")
 
 Filmiki są odtwarzane w MPlayerze dostarczanym z Anki. Filmik można
 odtworzyć ponownie nasiskając klawisz `R` (od: replay).
 
 Odpowiedzi wyglądają tak:
 
-![answer](https://github.com/dpurge/prawo-jazdy/raw/master/img/anki-answer.png "Screenshot z odpowiedzią")
+![answer](https://github.com/dpurge/prawo-jazdy/raw/master/img/odpowiedz-anki.png "Screenshot z odpowiedzią")
 
 ## Inne uwagi
 
@@ -86,4 +94,3 @@ Z wyłączeniem celów komercyjnych, możesz tego skryptu używać i go dowolnie
 Pull requesty przyjmę z wdzięcznością.
 
 Jeśli masz kłopoty z odpaleniem skryptu, poproś o pomoc kogoś ze znajomych - dla mnie to jednorazowy skrypcik, nie planuję go ulepszać. Nie starałem się też uczynić go pięknym ani obsłużyć wszelkich możliwych błędów - mi są potrzebne tylko pytania na kategorię A.
-
