@@ -15,13 +15,13 @@ def main(input, media, output, category, system):
 
     #media: %APPDATA%\Anki2\{profile}\collection.media
     #fields: nr pytania, pytanie, odpowiedz, punkty, komentarz
-    template = "{0}\t{1}\t{2}\t{3}\t{4}\n"
+    template = "{0}\t{1}\t{2}\t{3}\n"
     outfile = open(os.path.join(output, "prawo-jazdy-kat{0}-pytania.txt".format(category)), "w", encoding="utf-8")
     copy_command = 'copy' if system == 'windows' else 'cp'
 
     data = get_data(input)
-    for item in data["Treść pytania"]:
-        kategorie = item[18].split(',')
+    for item in data["Arkusz1"]:
+        kategorie = item[16].split(',')
         if category in kategorie:
             numer_pytania = item[1]
             pytanie = item[2]
@@ -30,8 +30,7 @@ def main(input, media, output, category, system):
             odpowiedz_c = item[5]
             odpowiedz_poprawna = item[14]
             media_file = item[15]
-            liczba_punktow = item[17]
-            komentarz = item[21]
+            komentarz = item[17]
             
             if media_file:
                     
@@ -67,9 +66,9 @@ def main(input, media, output, category, system):
                 question +='</div>'
             
             answer = '<div class="odpowiedz">'
-            if odpowiedz_poprawna == 'T':
+            if odpowiedz_poprawna == 'Tak':
                 answer += 'TAK'
-            elif odpowiedz_poprawna == 'N':
+            elif odpowiedz_poprawna == 'Nie':
                 answer += 'NIE'
             elif odpowiedz_poprawna == 'A':
                 answer += 'A: ' + odpowiedz_a
@@ -80,7 +79,7 @@ def main(input, media, output, category, system):
             else:
                 raise Exception("Unexpected answer: " + odpowiedz_poprawna)
             answer += '</div>'
-            outfile.write(template.format(numer_pytania, question, answer, liczba_punktow, komentarz))
+            outfile.write(template.format(numer_pytania, question, answer, komentarz))
     #print(media)
     #print(output)
     outfile.close()
